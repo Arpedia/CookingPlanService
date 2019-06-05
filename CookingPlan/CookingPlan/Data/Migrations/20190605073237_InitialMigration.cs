@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CookingPlan.Migrations
+namespace CookingPlan.Data.Migrations
 {
     public partial class InitialMigration : Migration
     {
