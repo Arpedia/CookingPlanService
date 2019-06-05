@@ -17,10 +17,10 @@ namespace CookingPlan.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            /*if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Server=LUNASKY-DESK\\SQLEXPRESS;Database=CookingPlanDb;Trusted_Connection=True;");
-            }
+            }*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

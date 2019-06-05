@@ -36,7 +36,7 @@ namespace CookingPlan
 
             services.AddDbContext<CookingPlanDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("LocalConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<CookingPlanDbContext>();
 
