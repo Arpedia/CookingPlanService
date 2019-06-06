@@ -28,8 +28,14 @@
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">OOの料理URLを入力して料理を指定</label>
+                <input id="Url" class="form-control" />
+                <button id="MealRegist" class="btn btn-default">URL指定</button>
+                <span id="Url-validation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="MealId" class="control-label"></label>
-                <select asp-for="MealId" class ="form-control" asp-items="ViewBag.MealId"></select>
+                <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -44,4 +50,34 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $("#MealRegist").click(function () {
+                console.log($('#Url').val());
+                var url = $('#Url').val();
+                if (!url.startsWith("https://park.ajinomoto.co.jp/recipe/card/"))
+                    return;
+                var spritUrl = url.split("/");
+                var num = parseInt(spritUrl[spritUrl.indexOf("card") + 1]);
+                console.log($('#Url').val());
+                $.ajax({
+                    url: '/api/registlations',
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({
+                        'UrlString': url,
+                        'Number': num
+                    })
+                }).done((data) => {
+                    $("#MealId").val(data);
+                    console.log(data);
+                    console.log("Url success");
+                }).fail((data) => {
+                    $("#Url-validation").text("このURLは有効ではありません。");
+                    console.log("Url failed");
+                })
+            })
+        });
+
+    </script>
 }

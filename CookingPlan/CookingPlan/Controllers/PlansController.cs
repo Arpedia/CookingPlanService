@@ -156,5 +156,13 @@ namespace CookingPlan.Controllers
         {
             return _context.Plan.Any(e => e.Id == id);
         }
+
+        /*
+        [HttpPost, ActionName("MealRegist")]
+        public async Task<IActionResult> MealRegistration([FromBody]Url url)
+        {
+            var partialURL = url.Number;
+            return Ok(partialURL);
+        }*/
     }
 }
