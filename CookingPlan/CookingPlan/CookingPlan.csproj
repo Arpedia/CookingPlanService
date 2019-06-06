@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20190605073237_InitialMigration.cs" />
+    <Compile Remove="Data\Migrations\20190605073237_InitialMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\20190606130118_RelationshipMigration.cs" />
     <Compile Remove="Data\Migrations\20190606130118_RelationshipMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190606130159_RelationshipMigration.cs" />
+    <Compile Remove="Data\Migrations\20190606130159_RelationshipMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190606132749_InitialMigration.cs" />
+    <Compile Remove="Data\Migrations\20190606132749_InitialMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

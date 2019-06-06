@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CookingPlan.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190605073237_InitialMigration")]
+    [Migration("20190606134911_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,78 @@ namespace CookingPlan.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CookingPlan.Models.Food", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Food");
+                });
+
+            modelBuilder.Entity("CookingPlan.Models.Ingredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FoodId");
+
+                    b.Property<int>("MealId");
+
+                    b.Property<string>("Num");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("MealId");
+
+                    b.ToTable("Ingredient");
+                });
+
+            modelBuilder.Entity("CookingPlan.Models.Meal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Meal");
+                });
+
+            modelBuilder.Entity("CookingPlan.Models.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("MealId");
+
+                    b.Property<int>("Time");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MealId");
+
+                    b.ToTable("Plan");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -184,6 +256,27 @@ namespace CookingPlan.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("CookingPlan.Models.Ingredient", b =>
+                {
+                    b.HasOne("CookingPlan.Models.Food", "Food")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CookingPlan.Models.Meal", "Meal")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CookingPlan.Models.Plan", b =>
+                {
+                    b.HasOne("CookingPlan.Models.Meal", "Meal")
+                        .WithMany("Plans")
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

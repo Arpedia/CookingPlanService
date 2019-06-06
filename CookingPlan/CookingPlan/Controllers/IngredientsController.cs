@@ -49,7 +49,7 @@ namespace CookingPlan.Controllers
         // GET: Ingredients/Create
         public IActionResult Create()
         {
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Id");
+            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Name");
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name");
             return View();
         }

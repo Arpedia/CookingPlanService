@@ -8,6 +8,7 @@ namespace CookingPlan.Models
 {
     public class Plan
     {
+        [Required]
         public int Id { get; set; }
         
         [Required]
