@@ -32,6 +32,7 @@ namespace CookingPlan.Others
             var doc = GetHtmlDoc().Result;
             var id = await AddMeal(doc);
             await AddFood(doc);
+            await AddIngredient(doc, id);
             return id;
         }
 
@@ -70,7 +71,7 @@ namespace CookingPlan.Others
                     var num = item.QuerySelector("dd").TextContent.Trim();
                     return new { Ingredient = ingredient, Num = num };
                 });
-
+            
             listItems.ToList().ForEach(item =>
             {
                 var isExist = context.Food.Select(m => m.Name == item.Ingredient).Count();
@@ -78,8 +79,30 @@ namespace CookingPlan.Others
                 Food food = new Food { Name = item.Ingredient };
                 context.Add(food);
             });
-
             return await context.SaveChangesAsync();
+        }
+
+        private async Task<int> AddIngredient(IHtmlDocument doc, int mealId)
+        {
+            if (context.Ingredient.Count(m => m.MealId == mealId) > 0)
+                return 0;
+
+            var listItems = doc.GetElementById("recipeMaterialList")
+                .GetElementsByTagName("dl")
+                .Select(item =>
+                {
+                    var ingredient = item.QuerySelector("dt").TextContent.Trim();
+                    var num = item.QuerySelector("dd").TextContent.Trim();
+                    return new { Ingredient = ingredient, Num = num };
+                });
+
+            listItems.ToList().ForEach(item => {
+                var foodid = context.Food.Single(m => m.Name == item.Ingredient).Id;
+                var ingredient = new Ingredient { MealId = mealId, FoodId = foodid, Num = item.Num };
+                context.Add(ingredient);
+            });
+            return await context.SaveChangesAsync();
+
         }
     }
 }
