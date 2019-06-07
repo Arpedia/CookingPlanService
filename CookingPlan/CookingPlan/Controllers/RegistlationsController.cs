@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CookingPlan.Data;
 using CookingPlan.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +14,11 @@ namespace CookingPlan.Controllers
     [Route("api/[controller]")]
     public class RegistlationsController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public RegistlationsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         /*
         // GET: api/<controller>
         [HttpGet]
@@ -31,10 +38,21 @@ namespace CookingPlan.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody, Bind("UrlString, Number")] Url url)
         {
-            var partialURL = url.Number;
-            return Ok(partialURL);
+            var partialNum = url.Number;
+            var isExsist = _context.Meal.Find(partialNum);
+            if (isExsist != null)
+                return Ok(partialNum);
+            else
+                Registrations(url);
+                return Ok(partialNum);
         }
 
+        private int Registrations(Url url)
+        {
+            Others.Scraping scraping = new Others.Scraping(url.UrlString, url.Number, _context);
+            return scraping.Run().Result;
+        }
+        /*
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
@@ -46,5 +64,6 @@ namespace CookingPlan.Controllers
         public void Delete(int id)
         {
         }
+        */
     }
 }
