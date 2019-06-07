@@ -34,6 +34,7 @@ namespace CookingPlan.Controllers
             }
 
             var meal = await _context.Meal
+                .Include(m => m.Ingredients)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (meal == null)
             {

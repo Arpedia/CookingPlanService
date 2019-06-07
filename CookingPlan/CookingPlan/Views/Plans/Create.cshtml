@@ -18,6 +18,16 @@
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label"><a href="https://park.ajinomoto.co.jp">レシピ大百科</a>　の料理ページURLを入力して指定</label>
+                <input id="Url" class="form-control" />
+                <button id="MealRegist" class="btn btn-default">URL指定</button>
+                <span id="Url-validation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MealId" class="control-label"></label>
+                <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
@@ -26,16 +36,6 @@
                 <label asp-for="Time" class="control-label"></label>
                 <input asp-for="Time" class="form-control" />
                 <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">OOの料理URLを入力して料理を指定</label>
-                <input id="Url" class="form-control" />
-                <button id="MealRegist" class="btn btn-default">URL指定</button>
-                <span id="Url-validation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MealId" class="control-label"></label>
-                <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -72,6 +72,7 @@
                     $("#MealId").val(data);
                     console.log(data);
                     console.log("Url success");
+                    window.location.href = '/plans/create/?mealId=' + data;
                 }).fail((data) => {
                     $("#Url-validation").text("このURLは有効ではありません。");
                     console.log("Url failed");

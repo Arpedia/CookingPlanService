@@ -38,19 +38,19 @@ namespace CookingPlan.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody, Bind("UrlString, Number")] Url url)
         {
-            var partialNum = url.Number;
-            var isExsist = _context.Meal.Find(partialNum);
+            var isExsist = _context.Meal.SingleOrDefault(m => m.Url == url.UrlString);
             if (isExsist != null)
-                return Ok(partialNum);
+                return Ok(isExsist.Id);
             else
-                Registrations(url);
-                return Ok(partialNum);
+                await Registrations(url);
+                return Ok(_context.Meal.Single(m => m.Url == url.UrlString).Id);
         }
 
-        private int Registrations(Url url)
+        private async Task<int> Registrations(Url url)
         {
             Others.Scraping scraping = new Others.Scraping(url.UrlString, url.Number, _context);
-            return scraping.Run().Result;
+            
+            return await scraping.Run();
         }
         /*
         // PUT api/<controller>/5

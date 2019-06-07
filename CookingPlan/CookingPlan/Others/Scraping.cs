@@ -30,8 +30,8 @@ namespace CookingPlan.Others
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             var doc = GetHtmlDoc().Result;
-            var id = await AddMeal(doc);
-            await AddFood(doc);
+            var id = AddMeal(doc);
+            AddFood(doc);
             await AddIngredient(doc, id);
             return id;
         }
@@ -44,7 +44,7 @@ namespace CookingPlan.Others
             return await parser.ParseDocumentAsync(source);
         }
 
-        private async Task<int> AddMeal(IHtmlDocument doc)
+        private int AddMeal(IHtmlDocument doc)
         {
 
             var title = doc.GetElementsByClassName("recipeTitle").Select(item =>
@@ -57,11 +57,11 @@ namespace CookingPlan.Others
 
             Meal meal = new Meal { Name = title, Url = url };
             context.Add(meal);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
             return context.Meal.Single(m => m.Url == url).Id;
         }
 
-        private async Task<int> AddFood(IHtmlDocument doc)
+        private int AddFood(IHtmlDocument doc)
         {
             var listItems = doc.GetElementById("recipeMaterialList")
                 .GetElementsByTagName("dl")
@@ -74,12 +74,12 @@ namespace CookingPlan.Others
             
             listItems.ToList().ForEach(item =>
             {
-                var isExist = context.Food.Select(m => m.Name == item.Ingredient).Count();
+                var isExist = context.Food.Count(m => m.Name == item.Ingredient);
                 if (isExist > 0) return;
                 Food food = new Food { Name = item.Ingredient };
                 context.Add(food);
             });
-            return await context.SaveChangesAsync();
+            return context.SaveChanges();
         }
 
         private async Task<int> AddIngredient(IHtmlDocument doc, int mealId)

@@ -22,7 +22,10 @@
         <dd>
             @Html.DisplayFor(model => model.Url)
         </dd>
-    </dl>
+    </dl>@*
+    <ul>
+        @foreach (var ingredient in Model.Ingredients)
+    </ul>*@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

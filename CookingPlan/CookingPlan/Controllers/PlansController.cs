@@ -45,11 +45,25 @@ namespace CookingPlan.Controllers
             return View(plan);
         }
 
+        /*
         // GET: Plans/Create
         public IActionResult Create()
         {
+            var plan = new Plan() { UserId = 1 };
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
-            return View();
+            return View(plan);
+        }*/
+
+        public IActionResult Create(int? mealId)
+        {
+            Plan plan;
+            if (mealId.HasValue)
+                plan = new Plan() { MealId = mealId.Value, UserId = 1 };
+            else
+                plan = new Plan() { UserId = 1 };
+
+            ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
+            return View(plan);
         }
 
         // POST: Plans/Create
