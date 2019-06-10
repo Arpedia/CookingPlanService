@@ -93,7 +93,7 @@ namespace CookingPlan.Controllers
         }
 
         // GET: Plans/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? mealId)
         {
             if (id == null)
             {
@@ -114,6 +114,8 @@ namespace CookingPlan.Controllers
                 new SelectListItem() { Value = "4", Text = "夜"},
                 new SelectListItem() { Value = "5", Text = "そのほか"},
             };
+            if (mealId.HasValue)
+                plan.MealId = mealId.Value;
             ViewData["Time"] = new SelectList(list, "Value", "Text");
             return View(plan);
         }
