@@ -63,6 +63,15 @@ namespace CookingPlan.Controllers
                 plan = new Plan() { UserId = 1 };
 
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
+            var list = new SelectListItem[]
+            {
+                new SelectListItem() { Value = "1", Text = "朝"},
+                new SelectListItem() { Value = "2", Text = "昼"},
+                new SelectListItem() { Value = "3", Text = "夕"},
+                new SelectListItem() { Value = "4", Text = "夜"},
+                new SelectListItem() { Value = "5", Text = "そのほか"},
+            };
+            ViewData["Time"] = new SelectList(list, "Value", "Text");
             return View(plan);
         }
 
@@ -97,6 +106,15 @@ namespace CookingPlan.Controllers
                 return NotFound();
             }
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name", plan.MealId);
+            var list = new SelectListItem[]
+            {
+                new SelectListItem() { Value = "1", Text = "朝"},
+                new SelectListItem() { Value = "2", Text = "昼"},
+                new SelectListItem() { Value = "3", Text = "夕"},
+                new SelectListItem() { Value = "4", Text = "夜"},
+                new SelectListItem() { Value = "5", Text = "そのほか"},
+            };
+            ViewData["Time"] = new SelectList(list, "Value", "Text");
             return View(plan);
         }
 
