@@ -12,7 +12,7 @@ namespace CookingPlan.Models
         public int Id { get; set; }
         
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CookingPlan.Data;
 using CookingPlan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CookingPlan.Controllers
 {
+    [Authorize]
     public class PlansController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +24,12 @@ namespace CookingPlan.Controllers
         // GET: Plans
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Plan.Include(p => p.Meal);
+            var applicationDbContext = _context.Plan
+                .Include(p => p.Meal)
+                .Where(p => p.UserId == User.Identity.Name);
+
+            string[] list = new string[] { "朝", "昼", "夕", "夜", "そのほか" };
+            ViewData["Time"] = list;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -58,9 +65,9 @@ namespace CookingPlan.Controllers
         {
             Plan plan;
             if (mealId.HasValue)
-                plan = new Plan() { MealId = mealId.Value, UserId = 1 };
+                plan = new Plan() { MealId = mealId.Value, UserId = User.Identity.Name };
             else
-                plan = new Plan() { UserId = 1 };
+                plan = new Plan() { UserId = User.Identity.Name };
 
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
             var list = new SelectListItem[]
