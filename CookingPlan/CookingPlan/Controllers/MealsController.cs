@@ -36,10 +36,18 @@ namespace CookingPlan.Controllers
             var meal = await _context.Meal
                 .Include(m => m.Ingredients)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (meal == null)
             {
                 return NotFound();
             }
+            var food = new Dictionary<int, string>();
+            foreach (var i in meal.Ingredients)
+            {
+                var tmp = _context.Food.Find(i.FoodId);
+                food.Add(tmp.Id , tmp.Name);
+            }
+            ViewBag.foodlist = food;
 
             return View(meal);
         }
