@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CookingPlan.Data;
 using CookingPlan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CookingPlan.Controllers
 {
+    [Authorize]
     public class PlansController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +24,12 @@ namespace CookingPlan.Controllers
         // GET: Plans
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Plan.Include(p => p.Meal);
+            var applicationDbContext = _context.Plan
+                .Include(p => p.Meal)
+                .Where(p => p.UserId == User.Identity.Name);
+
+            string[] list = new string[] { "朝", "昼", "夕", "夜", "そのほか" };
+            ViewData["Time"] = list;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -45,11 +52,34 @@ namespace CookingPlan.Controllers
             return View(plan);
         }
 
+        /*
         // GET: Plans/Create
         public IActionResult Create()
         {
+            var plan = new Plan() { UserId = 1 };
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
-            return View();
+            return View(plan);
+        }*/
+
+        public IActionResult Create(int? mealId)
+        {
+            Plan plan;
+            if (mealId.HasValue)
+                plan = new Plan() { MealId = mealId.Value, UserId = User.Identity.Name };
+            else
+                plan = new Plan() { UserId = User.Identity.Name };
+
+            ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
+            var list = new SelectListItem[]
+            {
+                new SelectListItem() { Value = "1", Text = "朝"},
+                new SelectListItem() { Value = "2", Text = "昼"},
+                new SelectListItem() { Value = "3", Text = "夕"},
+                new SelectListItem() { Value = "4", Text = "夜"},
+                new SelectListItem() { Value = "5", Text = "そのほか"},
+            };
+            ViewData["Time"] = new SelectList(list, "Value", "Text");
+            return View(plan);
         }
 
         // POST: Plans/Create
@@ -70,7 +100,7 @@ namespace CookingPlan.Controllers
         }
 
         // GET: Plans/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? mealId)
         {
             if (id == null)
             {
@@ -83,6 +113,17 @@ namespace CookingPlan.Controllers
                 return NotFound();
             }
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name", plan.MealId);
+            var list = new SelectListItem[]
+            {
+                new SelectListItem() { Value = "1", Text = "朝"},
+                new SelectListItem() { Value = "2", Text = "昼"},
+                new SelectListItem() { Value = "3", Text = "夕"},
+                new SelectListItem() { Value = "4", Text = "夜"},
+                new SelectListItem() { Value = "5", Text = "そのほか"},
+            };
+            if (mealId.HasValue)
+                plan.MealId = mealId.Value;
+            ViewData["Time"] = new SelectList(list, "Value", "Text");
             return View(plan);
         }
 

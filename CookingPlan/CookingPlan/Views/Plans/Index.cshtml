@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Time)
+                @ViewBag.Time[item.Time - 1]
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Meal.Name)

@@ -20,9 +20,17 @@
             @Html.DisplayNameFor(model => model.Url)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Url)
+            <a href = "@Html.DisplayFor(model => model.Url)" target="_blank">味の素パークへ</a>
         </dd>
     </dl>
+    <ul>
+        @foreach (var ingredient in Model.Ingredients)
+        {
+            <li>
+                <p>@ViewBag.foodlist[ingredient.FoodId] : @ingredient.Num</p>
+            </li>
+        }
+    </ul>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
