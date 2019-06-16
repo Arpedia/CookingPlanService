@@ -35,3 +35,50 @@ body {
         display: none;
     }
 }
+
+/* A tag - Delete underline */
+
+.non-link-decoration:link {
+    color: azure;
+}
+
+.non-link-decoration:visited {
+    color: azure;
+}
+
+.non-link-decoration:hover {
+    color: azure;
+    text-decoration: none
+}
+
+.non-link-decoration:active {
+    color: azure;
+    text-decoration: none
+}
+
+.non-link-decoration {
+    position: relative;
+    display: inline-block;
+    transition: .3s;
+}
+
+.non-link-decoration::after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: azure;
+    transition: .3s;
+    transform: translateX(-50%);
+}
+
+.non-link-decoration:hover::after {
+    width: 100%;
+}
+
+.body-margin {
+    margin-top: 5%;
+    font-size: medium;
+}
