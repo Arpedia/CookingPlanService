@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CookingPlan.Others
@@ -93,7 +94,7 @@ namespace CookingPlan.Others
                 {
                     var ingredient = item.QuerySelector("dt").TextContent.Trim();
                     var num = item.QuerySelector("dd").TextContent.Trim();
-                    return new { Ingredient = ingredient, Num = num };
+                    return new { Ingredient = CheckIngredientName(ingredient), Num = num };
                 });
 
             listItems.ToList().ForEach(item => {
@@ -103,6 +104,23 @@ namespace CookingPlan.Others
             });
             return await context.SaveChangesAsync();
 
+        }
+
+        private string CheckIngredientName(string source)
+        {
+            string tmp = source;
+            if (Regex.IsMatch(source, ".「(.+)*」"))
+            {
+                tmp = source.Substring(2, source.Length - 2); // A「OO...のA「の部分を削除
+                tmp = tmp.Remove(tmp.IndexOf('」'), 1);
+            }
+            else if(Regex.IsMatch(source, "「(.+)*」"))
+            {
+                tmp = source.Remove(tmp.IndexOf('「'), 1);
+                tmp = tmp.Remove(tmp.IndexOf('」'), 1);
+            }
+
+            return tmp;
         }
     }
 }
