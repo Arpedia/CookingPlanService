@@ -36,8 +36,11 @@ namespace CookingPlan
 
 
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("CloudConnection")));
+                services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
+            }
             else
                 services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CloudConnection")));
