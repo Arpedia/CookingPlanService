@@ -11,16 +11,16 @@
             <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
         </li>
         <li>
-            <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+            <button type="submit" class="btn btn-link navbar-btn navbar-link nav-link-margin">Logout</button>
         </li>
     </form>
 }
 else
 {
     <li class="nav-item">
-        <a asp-area="Identity" asp-page="/Account/Register" class="navbar-link non-link-decoration">Register</a>
+        <a asp-area="Identity" asp-page="/Account/Register" class="navbar-link non-link-decoration nav-link-margin">Register</a>
     </li>
     <li class="nav-item">
-        <a asp-area="Identity" asp-page="/Account/Login" class="navbar-link non-link-decoration">Log In</a>
+        <a asp-area="Identity" asp-page="/Account/Login" class="navbar-link non-link-decoration nav-link-margin">Log In</a>
     </li>
 }

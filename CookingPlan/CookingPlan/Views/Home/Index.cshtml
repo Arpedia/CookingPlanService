@@ -60,7 +60,7 @@
 
 <div id="main">
     <hr />
-    <div class="text-center" id-"login-button">
+    <div class="text-center" id="login-button">
         @if (SignInManager.IsSignedIn(User))
         {
             <div class="row text-center">
@@ -86,15 +86,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <p>利用にはユーザ登録が必要です</p>
-                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg btn-text">
-                        ユーザ登録 <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
+                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg btn-text">ユーザ登録</a>
                 </div>
                 <div class="col-md-6">
                     <p>すでにアカウントをお持ちの方</p>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-success btn-lg btn-text">
-                        ログイン <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-success btn-lg btn-text">ログイン</a>
                 </div>
             </div>
         }

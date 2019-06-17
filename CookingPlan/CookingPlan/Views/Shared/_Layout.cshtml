@@ -27,22 +27,22 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="navbar-link non-link-decoration" href="/plans/index">My Page</a>
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index">My Page</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-link non-link-decoration" href="/plans/create">料理プラン作成</a>
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/create">料理プラン作成</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-link non-link-decoration" href="/plans/index">今日のプラン</a>
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index">今日のプラン</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-link non-link-decoration" href="/plans/index">3日間のプラン</a>
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index">3日間のプラン</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-link non-link-decoration" href="/plans/index">1週間プラン</a>
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index">1週間プラン</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" style="color: azure">一覧表示</a>
+                    <a class="nav-link dropdown-toggle nav-link-margin" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" style="color: azure">一覧表示</a>
                     <div class="dropdown-menu" style="font-size: large; margin: 7px;">
                         <a class="dropdown-item" href="/plans/index_all">Plans - 登録済みプラン</a>
                         <a class="dropdown-item" href="/meals/index">Meals - 登録済み料理</a>
@@ -65,25 +65,26 @@
     </div>
 
     <environment include="Development">
-        <!--<script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>-->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"></script>-->
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
         </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.3.1/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
+        <script src="~/lib/popper/dist/popper.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

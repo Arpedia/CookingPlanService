@@ -78,6 +78,10 @@ body {
     width: 100%;
 }
 
+.nav-link-margin {
+    margin: 4%;
+}
+
 .body-margin {
     margin-top: 5%;
     font-size: medium;
