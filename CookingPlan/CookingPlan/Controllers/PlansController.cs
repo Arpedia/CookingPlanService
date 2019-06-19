@@ -182,5 +182,18 @@ namespace CookingPlan.Controllers
         {
             return _context.Plan.Any(e => e.Id == id);
         }
+
+        private List<string> GetIngredients(int MealId)
+        {
+            var ingredientList = new List<string>();
+            var meal = _context.Meal.Find(MealId);
+            foreach (var ingredient in meal.Ingredients)
+            {
+                var food = _context.Food.Find(ingredient.FoodId).Name;
+                ingredientList.Add(food);
+            }
+
+            return ingredientList;
+        }
     }
 }
