@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CookingPlan.Data;
 using CookingPlan.Models;
 using Microsoft.AspNetCore.Authorization;
+using CookingPlan.Others;
 
 namespace CookingPlan.Controllers
 {
@@ -28,8 +29,7 @@ namespace CookingPlan.Controllers
                 .Include(p => p.Meal)
                 .Where(p => p.UserId == User.Identity.Name);
 
-            string[] list = new string[] { "朝", "昼", "夕", "夜", "そのほか" };
-            ViewData["Time"] = list;
+            ViewData["Time"] = Const.TimeList();
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -70,15 +70,8 @@ namespace CookingPlan.Controllers
                 plan = new Plan() { UserId = User.Identity.Name };
 
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
-            var list = new SelectListItem[]
-            {
-                new SelectListItem() { Value = "1", Text = "朝"},
-                new SelectListItem() { Value = "2", Text = "昼"},
-                new SelectListItem() { Value = "3", Text = "夕"},
-                new SelectListItem() { Value = "4", Text = "夜"},
-                new SelectListItem() { Value = "5", Text = "そのほか"},
-            };
-            ViewData["Time"] = new SelectList(list, "Value", "Text");
+            
+            ViewData["Time"] = new SelectList(Const.TimeSelectList(), "Value", "Text");
             return View(plan);
         }
 
@@ -113,17 +106,9 @@ namespace CookingPlan.Controllers
                 return NotFound();
             }
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name", plan.MealId);
-            var list = new SelectListItem[]
-            {
-                new SelectListItem() { Value = "1", Text = "朝"},
-                new SelectListItem() { Value = "2", Text = "昼"},
-                new SelectListItem() { Value = "3", Text = "夕"},
-                new SelectListItem() { Value = "4", Text = "夜"},
-                new SelectListItem() { Value = "5", Text = "そのほか"},
-            };
             if (mealId.HasValue)
                 plan.MealId = mealId.Value;
-            ViewData["Time"] = new SelectList(list, "Value", "Text");
+            ViewData["Time"] = new SelectList(Const.TimeSelectList(), "Value", "Text");
             return View(plan);
         }
 
