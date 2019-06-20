@@ -86,3 +86,22 @@ body {
 .btn-text {
     font-size: x-large;
 }
+
+.list{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.list .list-header {
+    font-size: x-large;
+}
+
+.list .list-body {
+    padding-left: 5%;
+    font-size: medium;
+}
+
+.list .list-detail {
+    padding-left: 5%;
+    padding-right: 5%;
+}

@@ -27,13 +27,13 @@ namespace CookingPlan.Others
             context = _context;
         }
 
-        public async Task<int> Run()
+        public int Run()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             var doc = GetHtmlDoc().Result;
             var id = AddMeal(doc);
             AddFood(doc);
-            await AddIngredient(doc, id);
+            AddIngredient(doc, id);
             return id;
         }
 

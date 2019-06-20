@@ -65,9 +65,9 @@ namespace CookingPlan.Controllers
         {
             Plan plan;
             if (mealId.HasValue)
-                plan = new Plan() { MealId = mealId.Value, UserId = User.Identity.Name };
+                plan = new Plan() { MealId = mealId.Value, UserId = User.Identity.Name, Date = DateTime.Today };
             else
-                plan = new Plan() { UserId = User.Identity.Name };
+                plan = new Plan() { UserId = User.Identity.Name, Date = DateTime.Today };
 
             ViewData["MealId"] = new SelectList(_context.Set<Meal>(), "Id", "Name");
             
@@ -102,6 +102,10 @@ namespace CookingPlan.Controllers
 
             var plan = await _context.Plan.FindAsync(id);
             if (plan == null)
+            {
+                return NotFound();
+            }
+            else if(plan.UserId != User.Identity.Name)
             {
                 return NotFound();
             }
