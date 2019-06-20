@@ -5,17 +5,13 @@
 }
 
 <h2 class="text-center">All Your Cooking Plan Lists</h2>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary btn-lg">プラン作成</a>
-</p>
-
-<div id="today" class="list">
-    <div class="list list-header">
+<br />
+<div id="today" class="list card">
+    <div class="list-header">
         <h4>今日の料理プラン</h4>
     </div>
     <hr />
-    <div class="list list-body">
+    <div class="list-body card-body">
         @for (int timeId = 0; timeId < ViewBag.Time.Length; timeId += 1)
         {
             <h5 style="margin-bottom: 5px;">
@@ -41,15 +37,54 @@
     </div>
 </div>
 
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-primary btn-lg">新しくプランを作成</a>
+</p>
 
+<div id="3days" class="list card">
+    <div class="list-header">
+        <h4>3日間の料理プラン</h4>
+    </div>
+    <hr />
+    <div class="list-body card-body">
+        @foreach (var date in new List<DateTime>() { DateTime.Today, DateTime.Today.AddDays(1), DateTime.Today.AddDays(2) })
+        {
+            <h5 style="margin-bottom: 5px;">
+                <u>@date.ToString("yyyy/MM/dd (ddd)")</u>
+            </h5>
+            <div class="list list-detail">
+                <table class="table">
+                    @foreach (var item in Model.Where(p => p.Date == date).OrderBy(p => p.Time))
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Meals" asp-action="Details" asp-route-id="@item.MealId">@Html.DisplayFor(modelItem => item.Meal.Name)</a>
+                            </td>
+                            <td>
+                                <p>@ViewBag.Time[item.Time - 1]</p>
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id">変更</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">削除</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+    </div>
+</div>
 
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-primary btn-lg">新しくプランを作成</a>
+</p>
+
+<h3>今日以降のプラン一覧</h3>
+<br />
 <div id="all-plan">
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Date)
                 </th>
@@ -63,26 +98,24 @@
             </tr>
         </thead>
         <tbody>
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @ViewBag.Time[item.Time - 1]
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Meal.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">変更</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">削除</a>
-                </td>
-            </tr>
-    }
+            @foreach (var item in Model.Where(p => p.Date >= DateTime.Today))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @ViewBag.Time[item.Time - 1]
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Meal.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">変更</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">削除</a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

@@ -109,15 +109,19 @@ namespace CookingPlan.Others
         private string CheckIngredientName(string source)
         {
             string tmp = source;
-            if (Regex.IsMatch(source, ".「(.+)*」"))
+            if (Regex.IsMatch(source, "[ＡＢＣＤＥ]+「(.+)+」"))
             {
                 tmp = source.Substring(2, source.Length - 2); // A「OO...のA「の部分を削除
                 tmp = tmp.Remove(tmp.IndexOf('」'), 1);
             }
-            else if(Regex.IsMatch(source, "「(.+)*」"))
+            else if(Regex.IsMatch(source, "「(.+)+」"))
             {
                 tmp = source.Remove(tmp.IndexOf('「'), 1);
                 tmp = tmp.Remove(tmp.IndexOf('」'), 1);
+            }
+            else if (Regex.IsMatch(source, "[ＡＢＣＤＥ](.+)+"))
+            {
+                tmp = source.Remove(0, 1);
             }
 
             return tmp;

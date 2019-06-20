@@ -27,7 +27,9 @@ namespace CookingPlan.Controllers
         {
             var applicationDbContext = _context.Plan
                 .Include(p => p.Meal)
-                .Where(p => p.UserId == User.Identity.Name);
+                .Where(p => p.UserId == User.Identity.Name)
+                .OrderBy(p => p.Date)
+                .ThenBy(p => p.Time);
 
             ViewData["Time"] = Const.TimeList();
             return View(await applicationDbContext.ToListAsync());
