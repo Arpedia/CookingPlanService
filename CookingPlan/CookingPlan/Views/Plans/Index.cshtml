@@ -79,43 +79,49 @@
     <a asp-action="Create" class="btn btn-primary btn-lg">新しくプランを作成</a>
 </p>
 
-<h3>今日以降のプラン一覧</h3>
-<br />
-<div id="all-plan">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Time)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Meal)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Where(p => p.Date >= DateTime.Today))
-            {
+
+<div id="all-plan" class="list card">
+    <div class="list-header">
+        <h4>今日以降のプラン一覧</h4>
+    </div>
+    <hr />
+    <div class="list-body card-body">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @ViewBag.Time[item.Time - 1]
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Meal.Name)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">変更</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">削除</a>
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Time)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Meal.Name)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(p => p.Date >= DateTime.Today))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @ViewBag.Time[item.Time - 1]
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Meal.Name)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">変更</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">削除</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
