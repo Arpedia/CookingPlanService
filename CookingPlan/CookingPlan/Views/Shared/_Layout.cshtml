@@ -2,12 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>@ViewData["Title"] - CookingPlan</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/united/bootstrap.min.css">
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-navbar-sidebar/dist/navbar-fixed-left.min.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -16,34 +18,48 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CookingPlan</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Plans" asp-action="Index">料理プラン一覧</a></li>
-                    <li><a asp-area="" asp-controller="Plans" asp-action="Create">プラン入力</a></li>
-                    <li><a asp-area="" asp-controller="Meals" asp-action="Index">登録された料理</a></li>
-                    <li><a asp-area="" asp-controller="Foods" asp-action="Index">登録された食材</a></li>
-                    <li><a asp-area="" asp-controller="Meals" asp-action="Index">登録された料理</a></li>
-                </ul>
+<body style="background-color: whitesmoke">
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-left" style="font-size: medium;">
+        <a class="navbar-brand" href="/" style="font-size: x-large">Cooking Plan</a>
+        <button class="navbar-toggler" aria-expanded="false" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation" type="button" data-target="#navbarsExampleDefault" data-toggle="collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index">My Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/create">料理プラン作成</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index#today">今日のプラン</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index#3days">3日間のプラン</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-link non-link-decoration nav-link-margin" href="/plans/index#all-plan">プラン一覧</a>
+                </li>
+                <li>
+                    <a class="navbar-link non-link-decoration nav-link-margin">買い物リスト</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle nav-link-margin" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" style="color: azure">一覧表示</a>
+                    <div class="dropdown-menu" style="font-size: large; margin: 7px;">
+                        <a class="dropdown-item" href="/plans/index">Plans - 登録済みプラン</a>
+                        <a class="dropdown-item" href="/meals/index">Meals - 登録済み料理</a>
+                        <a class="dropdown-item" href="/foods/index">Foods - 登録済み材料</a>
+                    </div>
+                </li>
                 <partial name="_LoginPartial" />
-            </div>
+            </ul>
         </div>
     </nav>
 
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
+    <div class="container body-content body-margin" style="font-size: large;">
         @RenderBody()
         <hr />
         <footer>
@@ -52,23 +68,36 @@
     </div>
 
     <environment include="Development">
+        <!--<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>-->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=">
+        </script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM">
+        </script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
         </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.3.1/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM">
+        </script>
+        <script src="~/lib/popper/dist/popper.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

@@ -16,12 +16,15 @@ namespace CookingPlan.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "日付")]
         public DateTime Date { get; set; }
 
         [Required]
+        [Display(Name = "時間帯")]
         public int Time { get; set; }
 
         [Required]
+        [Display(Name = "料理名")]
         public int MealId { get; set; }
         public virtual Meal Meal { get; set; }
     }
