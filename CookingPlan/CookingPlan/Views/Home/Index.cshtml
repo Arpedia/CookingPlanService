@@ -55,7 +55,15 @@
     <hr />
     <div id="everyone-select-meal" style="margin-top: 3%;">
         <h3><u>みんなが最近作った料理</u></h3>
-        <div id="meals" class="text-center">
+        <div id="meals" class="text-lg">
+            <ol>
+                @foreach (var item in ViewBag.TodayMeals)
+                {
+                    <li style="margin-top:3%;">
+                        <a asp-controller="Meals" asp-action="Details" asp-route-id="@item.MealId">@item.Meal.Name</a>
+                    </li>
+                }
+            </ol>
         </div>
     </div>
 </div>
