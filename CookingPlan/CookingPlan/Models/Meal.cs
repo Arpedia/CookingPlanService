@@ -12,9 +12,12 @@ namespace CookingPlan.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "料理名")]
         public string Name { get; set; }
+        [Display(Name = "レシピ URL")]
         public string Url { get; set; }
 
+        [Display(Name = "材料")]
         public virtual ICollection<Ingredient> Ingredients { get; set; }
         public virtual ICollection<Plan> Plans { get; set; }
     }

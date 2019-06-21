@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>料理詳細</h2>
 
 <div>
-    <h4>Meal</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,7 +19,7 @@
             @Html.DisplayNameFor(model => model.Url)
         </dt>
         <dd>
-            <a href = "@Html.DisplayFor(model => model.Url)" target="_blank">味の素パークへ</a>
+            <a href = "@Html.DisplayFor(model => model.Url)" target="_blank">味の素パークでレシピを見る</a>
         </dd>
     </dl>
     <ul>
@@ -31,8 +30,4 @@
             </li>
         }
     </ul>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>

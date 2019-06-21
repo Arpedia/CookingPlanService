@@ -9,19 +9,19 @@
 <h4>Plan</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
+        <div class="form-group">
+            <label class="control-label"><a href="https://park.ajinomoto.co.jp" target="_blank">レシピ大百科</a>　の料理ページURLを入力して指定</label>
+            <input id="Url" type="url" class="form-control cancel" />
+            <button type="button" id="MealRegist" class="btn btn-default cancel">URL指定</button><br />
+            <span id="Url-validation" class="text-danger"></span>
+        </div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group" hidden>
                 <label asp-for="UserId" class="control-label"></label>
                 <input asp-for="UserId" class="form-control" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label"><a href="https://park.ajinomoto.co.jp" target="_blank">レシピ大百科</a>　の料理ページURLを入力して指定</label>
-                <input id="Url" class="form-control" />
-                <button id="MealRegist" class="btn btn-default">URL指定</button>
-                <span id="Url-validation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MealId" class="control-label"></label>
@@ -38,7 +38,7 @@
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <button id="submit" type="submit" value="Create" class="btn btn-default">登録</button><br />
             </div>
         </form>
     </div>
@@ -49,17 +49,19 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(function () {
             $("#MealRegist").click(function () {
-                console.log($('#Url').val());
                 var url = $('#Url').val();
-                if (!url.startsWith("https://park.ajinomoto.co.jp/recipe/card/"))
+                $('#Url-validation').text("そのままお待ちください。");
+                $('#submit').prop("disabled", true);
+                if (!url.startsWith("https://park.ajinomoto.co.jp/recipe/card/")) {
+                    $('#Url-validation').text("味の素 レシピ大百科の料理ページを指定してください。");
                     return;
+                }
                 var spritUrl = url.split("/");
                 var num = parseInt(spritUrl[spritUrl.indexOf("card") + 1]);
-                console.log($('#Url').val());
+                console.log(url);
                 $.ajax({
                     url: '/api/registlations',
                     type: 'POST',
@@ -73,12 +75,16 @@
                     console.log(data);
                     console.log("Url success");
                     window.location.href = '/plans/create/?mealId=' + data;
+                    $('#Url-validation').text("完了しました。");
                 }).fail((data) => {
                     $("#Url-validation").text("このURLは有効ではありません。");
-                    console.log("Url failed");
+                     console.log("Url failed");
+                }).always(function () {
+                    $('#submit').prop("disabled", false);
                 })
             })
         });
 
     </script>
+   @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
