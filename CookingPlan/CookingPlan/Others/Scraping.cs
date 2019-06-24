@@ -27,13 +27,12 @@ namespace CookingPlan.Others
             context = _context;
         }
 
-        public int Run()
+        public async Task<int> Run()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            var doc = GetHtmlDoc().Result;
+            var doc = await GetHtmlDoc();
             var id = AddMeal(doc);
-            AddFood(doc);
-            AddIngredient(doc, id);
+            await AddIngredient(doc, id);
             return id;
         }
 
@@ -62,27 +61,6 @@ namespace CookingPlan.Others
             return context.Meal.Single(m => m.Url == url).Id;
         }
 
-        private int AddFood(IHtmlDocument doc)
-        {
-            var listItems = doc.GetElementById("recipeMaterialList")
-                .GetElementsByTagName("dl")
-                .Select(item =>
-                {
-                    var ingredient = item.QuerySelector("dt").TextContent.Trim();
-                    var num = item.QuerySelector("dd").TextContent.Trim();
-                    return new { Ingredient = ingredient, Num = num };
-                });
-            
-            listItems.ToList().ForEach(item =>
-            {
-                var isExist = context.Food.Count(m => m.Name == item.Ingredient);
-                if (isExist > 0) return;
-                Food food = new Food { Name = item.Ingredient };
-                context.Add(food);
-            });
-            return context.SaveChanges();
-        }
-
         private async Task<int> AddIngredient(IHtmlDocument doc, int mealId)
         {
             if (context.Ingredient.Count(m => m.MealId == mealId) > 0)
@@ -98,8 +76,7 @@ namespace CookingPlan.Others
                 });
 
             listItems.ToList().ForEach(item => {
-                var foodid = context.Food.Single(m => m.Name == item.Ingredient).Id;
-                var ingredient = new Ingredient { MealId = mealId, FoodId = foodid, Num = item.Num };
+                var ingredient = new Ingredient { MealId = mealId, Food = item.Ingredient, Num = item.Num };
                 context.Add(ingredient);
             });
             return await context.SaveChangesAsync();

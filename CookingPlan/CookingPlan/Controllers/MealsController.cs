@@ -41,14 +41,6 @@ namespace CookingPlan.Controllers
             {
                 return NotFound();
             }
-            var food = new Dictionary<int, string>();
-
-            foreach (var i in meal.Ingredients)
-            {
-                var tmp = _context.Food.Find(i.FoodId);
-                food.Add(tmp.Id , tmp.Name);
-            }
-            ViewBag.foodlist = food;
 
             return View(meal);
         }

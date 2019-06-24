@@ -35,7 +35,6 @@ namespace CookingPlan.Controllers
             }
 
             var ingredient = await _context.Ingredient
-                .Include(i => i.Food)
                 .Include(i => i.Meal)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ingredient == null)
@@ -49,7 +48,6 @@ namespace CookingPlan.Controllers
         // GET: Ingredients/Create
         public IActionResult Create()
         {
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Name");
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name");
             return View();
         }
@@ -67,7 +65,6 @@ namespace CookingPlan.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Id", ingredient.FoodId);
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name", ingredient.MealId);
             return View(ingredient);
         }
@@ -85,7 +82,6 @@ namespace CookingPlan.Controllers
             {
                 return NotFound();
             }
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Id", ingredient.FoodId);
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name", ingredient.MealId);
             return View(ingredient);
         }
@@ -122,7 +118,6 @@ namespace CookingPlan.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Id", ingredient.FoodId);
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name", ingredient.MealId);
             return View(ingredient);
         }
@@ -136,7 +131,6 @@ namespace CookingPlan.Controllers
             }
 
             var ingredient = await _context.Ingredient
-                .Include(i => i.Food)
                 .Include(i => i.Meal)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ingredient == null)
