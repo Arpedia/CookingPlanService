@@ -43,16 +43,19 @@ namespace CookingPlan.Controllers
                 return Ok(isExsist.Id);
             else
             {
-                var mealid = await Registrations(url);
-                return Ok(_context.Meal.FindAsync(mealid).Id);
+                var mealid = Registrations(url);
+                var meal = await _context.Meal.FindAsync(mealid);
+                return Ok(meal.Id);
             }
         }
 
-        private async Task<int> Registrations(Url url)
+        //private async Task<int> Registrations(Url url)
+        private int Registrations(Url url)
         {
             Others.Scraping scraping = new Others.Scraping(url.UrlString, url.Number, _context);
-            
-            return await scraping.Run();
+            return scraping.Run().Result;
+            //return await scraping.Run();
+
         }
         /*
         // PUT api/<controller>/5

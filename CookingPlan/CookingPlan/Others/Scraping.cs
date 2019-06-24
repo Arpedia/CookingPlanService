@@ -30,9 +30,9 @@ namespace CookingPlan.Others
         public async Task<int> Run()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            var doc = await GetHtmlDoc();
-            var id = AddMeal(doc);
-            await AddIngredient(doc, id);
+            var doc = GetHtmlDoc();
+            var id = AddMeal(doc.Result);
+            await AddIngredient(doc.Result, id);
             return id;
         }
 
