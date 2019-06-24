@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CookingPlan.Data;
 using CookingPlan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CookingPlan.Controllers
 {
+    [Authorize]
     public class MealsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -41,14 +43,6 @@ namespace CookingPlan.Controllers
             {
                 return NotFound();
             }
-            var food = new Dictionary<int, string>();
-
-            foreach (var i in meal.Ingredients)
-            {
-                var tmp = _context.Food.Find(i.FoodId);
-                food.Add(tmp.Id , tmp.Name);
-            }
-            ViewBag.foodlist = food;
 
             return View(meal);
         }

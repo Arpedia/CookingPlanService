@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CookingPlan.Data;
 using CookingPlan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CookingPlan.Controllers
 {
+    [Authorize]
     public class IngredientsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +24,7 @@ namespace CookingPlan.Controllers
         // GET: Ingredients
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Ingredient.Include(i => i.Food).Include(i => i.Meal);
+            var applicationDbContext = _context.Ingredient.Include(i => i.Meal);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,7 +37,6 @@ namespace CookingPlan.Controllers
             }
 
             var ingredient = await _context.Ingredient
-                .Include(i => i.Food)
                 .Include(i => i.Meal)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ingredient == null)
@@ -49,7 +50,6 @@ namespace CookingPlan.Controllers
         // GET: Ingredients/Create
         public IActionResult Create()
         {
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Name");
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name");
             return View();
         }
@@ -59,7 +59,7 @@ namespace CookingPlan.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MealId,FoodId,Num")] Ingredient ingredient)
+        public async Task<IActionResult> Create([Bind("Id,MealId,Food,Num")] Ingredient ingredient)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,6 @@ namespace CookingPlan.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Id", ingredient.FoodId);
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name", ingredient.MealId);
             return View(ingredient);
         }
@@ -85,7 +84,6 @@ namespace CookingPlan.Controllers
             {
                 return NotFound();
             }
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Id", ingredient.FoodId);
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name", ingredient.MealId);
             return View(ingredient);
         }
@@ -95,7 +93,7 @@ namespace CookingPlan.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MealId,FoodId,Num")] Ingredient ingredient)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MealId,Food,Num")] Ingredient ingredient)
         {
             if (id != ingredient.Id)
             {
@@ -122,7 +120,6 @@ namespace CookingPlan.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FoodId"] = new SelectList(_context.Set<Food>(), "Id", "Id", ingredient.FoodId);
             ViewData["MealId"] = new SelectList(_context.Meal, "Id", "Name", ingredient.MealId);
             return View(ingredient);
         }
@@ -136,7 +133,6 @@ namespace CookingPlan.Controllers
             }
 
             var ingredient = await _context.Ingredient
-                .Include(i => i.Food)
                 .Include(i => i.Meal)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ingredient == null)

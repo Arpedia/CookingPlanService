@@ -110,3 +110,20 @@ body {
     padding-left: 5%;
     padding-right: 5%;
 }
+
+dt.detail{
+    margin-bottom: 1%;
+}
+dd.detail {
+    margin-bottom: 3%;
+    padding-left: 3%;
+}
+
+span.col-1 {
+    display: inline-block;
+    width: 20em;
+}
+
+span.col-2 {
+    display: inline-block;
+}

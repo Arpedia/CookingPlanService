@@ -42,15 +42,20 @@ namespace CookingPlan.Controllers
             if (isExsist != null)
                 return Ok(isExsist.Id);
             else
-                Registrations(url);
-                return Ok(_context.Meal.Single(m => m.Url == url.UrlString).Id);
+            {
+                var mealid = Registrations(url);
+                var meal = await _context.Meal.FindAsync(mealid);
+                return Ok(meal.Id);
+            }
         }
 
+        //private async Task<int> Registrations(Url url)
         private int Registrations(Url url)
         {
             Others.Scraping scraping = new Others.Scraping(url.UrlString, url.Number, _context);
-            
-            return scraping.Run();
+            return scraping.Run().Result;
+            //return await scraping.Run();
+
         }
         /*
         // PUT api/<controller>/5

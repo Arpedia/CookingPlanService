@@ -14,10 +14,9 @@ namespace CookingPlan.Models
         [Required]
         public int MealId { get; set; }
         public virtual Meal Meal { get; set; }
-
+        
         [Required]
-        public int FoodId { get; set; }
-        public virtual Food Food { get; set; }
+        public string Food { get; set; }
 
         public string Num { get; set; }
     }

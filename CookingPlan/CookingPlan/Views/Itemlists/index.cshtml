@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CookingPlan.Models.Plan>
+
+@{
+    ViewData["Title"] = "Item List";
+}
+
+<h2 class="text-center">材料リスト（３日分）</h2>
+<br />
+<div id="today" class="list card">
+    <div class="list-header">
+        <h4>直近３日間の料理プラン</h4>
+    </div>
+    <hr />
+    <div class="list-body card-body">
+        @for (var date_count = 0; date_count < 3; date_count += 1)
+        {
+            <h5 style="margin-bottom: 5px;">
+                <u>@ViewBag.Date[date_count] (@DateTime.Today.AddDays(date_count).ToShortDateString())</u>
+            </h5>
+            <div class="row">
+                @foreach (var item in Model.Where(p => p.Date == DateTime.Today.AddDays(date_count)).OrderBy(p => p.Time))
+                {
+                    <div class="col-md-4">
+                        <a asp-controller="Meals" asp-action="Details" asp-route-id="@item.MealId">@Html.DisplayFor(modelItem => item.Meal.Name)</a>
+                    </div>
+                    <div class="col-md-8">
+                        @foreach (var food in item.Meal.Ingredients)
+                        {
+                            <ul>
+                                <li class="row">
+                                    <div class="col-sm-8 col-md-6">@food.Food</div>
+                                    <div class="col-sm-4 col-md-6">@food.Num</div>
+                                </li>
+                            </ul>
+                        }
+
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
