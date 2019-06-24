@@ -22,7 +22,7 @@ namespace CookingPlan.Controllers
         // GET: Ingredients
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Ingredient.Include(i => i.Food).Include(i => i.Meal);
+            var applicationDbContext = _context.Ingredient.Include(i => i.Meal);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -57,7 +57,7 @@ namespace CookingPlan.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MealId,FoodId,Num")] Ingredient ingredient)
+        public async Task<IActionResult> Create([Bind("Id,MealId,Food,Num")] Ingredient ingredient)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace CookingPlan.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MealId,FoodId,Num")] Ingredient ingredient)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MealId,Food,Num")] Ingredient ingredient)
         {
             if (id != ingredient.Id)
             {
