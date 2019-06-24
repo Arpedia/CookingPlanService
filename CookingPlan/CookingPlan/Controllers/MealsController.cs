@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CookingPlan.Data;
 using CookingPlan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CookingPlan.Controllers
 {
+    [Authorize]
     public class MealsController : Controller
     {
         private readonly ApplicationDbContext _context;

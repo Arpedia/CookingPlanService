@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CookingPlan.Models.Plan>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Plan List";
 }
 
 <h2 class="text-center">All Your Cooking Plan Lists</h2>
@@ -37,9 +37,14 @@
     </div>
 </div>
 
-<p class="text-center">
-    <a asp-action="Create" class="btn btn-primary btn-lg">新しくプランを作成</a>
-</p>
+<div class="row" style="margin-left: 10%; margin-right: 10%;">
+    <div class="col-md-6 text-center">
+        <a asp-action="Create" class="btn btn-primary btn-block btn-lg">新しくプランを作成</a>
+    </div>
+    <div class="col-md-6 text-center">
+        <a asp-controller="Itemlists" asp-action="Index" class="btn btn-success btn-block btn-lg">材料リストを見る</a>
+    </div>
+</div>
 
 <div id="3days" class="list card">
     <div class="list-header">
@@ -75,9 +80,14 @@
     </div>
 </div>
 
-<p class="text-center">
-    <a asp-action="Create" class="btn btn-primary btn-lg">新しくプランを作成</a>
-</p>
+<div class="row" style="margin-left: 10%; margin-right: 10%;">
+    <div class="col-md-6 text-center">
+        <a asp-action="Create" class="btn btn-primary btn-block btn-lg">新しくプランを作成</a>
+    </div>
+    <div class="col-md-6 text-center">
+        <a asp-controller="Itemlists" asp-action="Index" class="btn btn-success btn-block btn-lg">材料リストを見る</a>
+    </div>
+</div>
 
 
 <div id="all-plan" class="list card">
