@@ -189,6 +189,7 @@ namespace CookingPlan.Controllers
             return _context.Plan.Any(e => e.Id == id);
         }
 
+        /*
         private List<string> GetIngredients(int MealId)
         {
             var ingredientList = new List<string>();
@@ -200,6 +201,6 @@ namespace CookingPlan.Controllers
             }
 
             return ingredientList;
-        }
+        }*/
     }
 }

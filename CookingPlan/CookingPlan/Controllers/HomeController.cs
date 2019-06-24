@@ -5,13 +5,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CookingPlan.Models;
+using CookingPlan.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CookingPlan.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.TodayMeals = await _context.Plan
+                .Include(p => p.Meal)
+                .Where(p => p.Date == DateTime.Today)
+                .OrderByDescending(p => p.Id)
+                .Take(5)
+                .ToListAsync();
+
             return View();
         }
 

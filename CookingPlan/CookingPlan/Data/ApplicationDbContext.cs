@@ -16,6 +16,5 @@ namespace CookingPlan.Data
         public DbSet<CookingPlan.Models.Plan> Plan { get; set; }
         public DbSet<CookingPlan.Models.Meal> Meal { get; set; }
         public DbSet<CookingPlan.Models.Ingredient> Ingredient { get; set; }
-        public DbSet<CookingPlan.Models.Food> Food { get; set; }
     }
 }

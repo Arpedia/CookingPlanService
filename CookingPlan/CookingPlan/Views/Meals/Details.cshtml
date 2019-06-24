@@ -9,24 +9,26 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt class="detail">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd>
+        <dd class="detail">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt>
+        <dt class="detail">
             @Html.DisplayNameFor(model => model.Url)
         </dt>
-        <dd>
+        <dd class="detail">
             <a href = "@Html.DisplayFor(model => model.Url)" target="_blank">味の素パークでレシピを見る</a>
         </dd>
     </dl>
+    <hr />
+    <h5>材料一覧</h5>
     <ul>
         @foreach (var ingredient in Model.Ingredients)
         {
             <li>
-                <p>@ViewBag.foodlist[ingredient.FoodId] : @ingredient.Num</p>
+                <p>@ingredient.Food : @ingredient.Num</p>
             </li>
         }
     </ul>
