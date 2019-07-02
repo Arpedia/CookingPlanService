@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -36,15 +36,17 @@ namespace CookingPlan.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "{0}を入力してください。")]
+            [EmailAddress(ErrorMessage = "{0}を入力してください。")]
+            [Display(Name = "メールアドレス")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0}を入力してください。")]
             [DataType(DataType.Password)]
+            [Display(Name = "パスワード")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "アカウント情報を記憶させますか？")]
             public bool RememberMe { get; set; }
         }
 

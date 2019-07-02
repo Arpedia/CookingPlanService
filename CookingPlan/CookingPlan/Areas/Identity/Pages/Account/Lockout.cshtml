@@ -6,5 +6,16 @@
 
 <header>
     <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">This account has been locked out, please try again later.</p>
+    <p class="text-danger">アカウント情報の間違いが規定回数を超えたためアカウントをロックしました。</p>
+    <p class="text-danger">時間をおいて再度ログインをしてください。</p>
+
+
+    <div class="form-group">
+        <p>
+            <a asp-page="./ForgotPassword">パスワードを忘れた？</a>
+        </p>
+        <p>
+            アカウントを作った覚えがない？ - <a asp-page="./Register">アカウントを作成</a>
+        </p>
+    </div>
 </header>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
@@ -39,20 +39,20 @@ namespace CookingPlan.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "{0}を入力してください")]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "メールアドレス")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "{0}を入力してください")]
+            [StringLength(20, ErrorMessage = "{0}は {2} 文字以上 {1} 文字以下で入力してください。", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "パスワード")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "パスワードの確認")]
+            [Compare("Password", ErrorMessage = "上のパスワードと一致しません...再入力をお願いします。")]
             public string ConfirmPassword { get; set; }
         }
 
