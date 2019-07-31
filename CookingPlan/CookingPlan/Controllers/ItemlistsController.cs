@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CookingPlan.Data;
+using CookingPlan.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +28,8 @@ namespace CookingPlan.Controllers
 
             foreach (var plan in plans)
             {
-                var meals = await _context.Meal.Include(m => m.Ingredients).FirstAsync(m => m.Id == plan.MealId);
-                plan.Meal = meals;
+                var meal = await _context.Meal.Include(m => m.Ingredients).FirstAsync(m => m.Id == plan.MealId);
+                plan.Meal = meal;
             }
 
             ViewBag.Time = Others.Const.TimeList();
@@ -39,23 +40,19 @@ namespace CookingPlan.Controllers
         public async Task<IActionResult> Checklist([Bind("Date")] DateTime date)
         {
             ViewBag.selected_date = date;
-            /*
-            if (date.Length == 0)
-            {
-                date = DateTime.Today.AddDays(3).ToLongDateString();
-            }
-            */
+
             var plans = _context.Plan
                 .Include(p => p.Meal)
                 .Where(p => p.Date >= DateTime.Today && p.Date <= date);
-            
+
+            var ingredient_list = new List<Ingredient>();
             foreach (var plan in plans)
             {
-                var meals = await _context.Meal.Include(m => m.Ingredients).FirstAsync(m => m.Id == plan.MealId);
-                plan.Meal = meals;
+                var ingredient = _context.Ingredient.Where(i => i.MealId == plan.Meal.Id);
+                ingredient_list.AddRange(ingredient.ToList());
             }
-
-            return View(plans);
+            ingredient_list.OrderBy(i => i.Food);
+            return View(ingredient_list);
         }
     }
 }

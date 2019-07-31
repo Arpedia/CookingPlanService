@@ -1,4 +1,4 @@
-﻿
+﻿@model List<CookingPlan.Models.Ingredient>
 @{
     ViewData["Title"] = "CheckList";
 }
@@ -10,5 +10,17 @@
         <h4>@DateTime.Today.ToString("MM/dd") ~ @ViewBag.selected_date.ToString("MM/dd") の料理プラン</h4>
     </div>
     <hr />
-
+    <div class="list-body card-body">
+        @foreach (Ingredient ingr in Model)
+        {
+        <dl class="row">
+            <dt class="col-md-5">
+                <input type="checkbox" /> @ingr.Food
+            </dt>
+            <dd class="col-md-5">
+                @ingr.Num
+            </dd>
+        </dl>
+        }
+    </div>
 </div>
