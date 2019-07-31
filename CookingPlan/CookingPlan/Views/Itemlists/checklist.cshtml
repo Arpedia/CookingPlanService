@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "CheckList";
+}
+
+<h2 class="text-center">材料リスト</h2>
+<br />
+<div id="today" class="list card">
+    <div class="list-header">
+        <h4>@DateTime.Today.ToString("MM/dd") ~ @ViewBag.selected_date.ToString("MM/dd") の料理プラン</h4>
+    </div>
+    <hr />
+
+</div>

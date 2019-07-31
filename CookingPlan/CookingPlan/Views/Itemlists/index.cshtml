@@ -6,9 +6,18 @@
 
 <h2 class="text-center">材料リスト（３日分）</h2>
 <br />
+<h4>下のボタンで指定の日時までの料理で必要な材料のチェックリストを作成できます！</h4>
+<form asp-action="Checklist">
+    <div class="form-group">
+        <label>今日から次で指定する日までの料理に必要な材料を見る</label>
+        <input name="Date" type="date" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")" />
+        <input type="submit" value="チェックリスト作成" />
+    </div>
+</form>
+<br />
 <div id="today" class="list card">
     <div class="list-header">
-        <h4>直近３日間の料理プラン</h4>
+        <h4>直近３日間の料理プランと材料</h4>
     </div>
     <hr />
     <div class="list-body card-body">
